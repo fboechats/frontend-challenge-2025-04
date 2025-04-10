@@ -37,11 +37,13 @@ export default function UserTable({
                 </TableRow>
             </TableHeader>
             {!isLoading && users.length === 0 ? (
-                <tr>
-                    <td colSpan={6} className="text-center text-muted-foreground py-6">
-                        No users found.
-                    </td>
-                </tr>
+                <tbody>
+                    <tr>
+                        <td colSpan={6} className="text-center text-muted-foreground py-6">
+                            No users found.
+                        </td>
+                    </tr>
+                </tbody>
             ) : (
                 <TableBody>
                     {isLoading

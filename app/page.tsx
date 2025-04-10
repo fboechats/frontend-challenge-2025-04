@@ -1,23 +1,20 @@
 "use client";
 
-import { SearchBar, ToggleFavoritesOnly, UserDetailsModal, UserQuantitySelector } from "@/components/users";
+import { SearchBar, ToggleFavoritesOnly, UserQuantitySelector } from "@/components/users";
 import UserTable from "@/components/users/UserTable";
 import { useFavorites } from "@/hooks/useFavorites";
+import { fetchUsers } from "@/lib/fetch-users";
 import { User } from "@/types/user";
 import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
-
-async function fetchUsers(quantity: number) {
-  const res = await fetch(`https://randomuser.me/api/?results=${quantity}`);
-  const data = await res.json();
-  return data.results;
-}
 
 export default function HomePage() {
   const [query, setQuery] = useState("");
   const [quantity, setQuantity] = useState(10);
+  const [page, setPage] = useState(1);
   const [showOnlyFavorites, setShowOnlyFavorites] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const router = useRouter();
 
   const {
     isFavorite,
@@ -30,8 +27,8 @@ export default function HomePage() {
     isLoading,
     error,
   } = useQuery<User[]>({
-    queryKey: ["users", quantity],
-    queryFn: () => fetchUsers(quantity),
+    queryKey: ["users", quantity, page],
+    queryFn: () => fetchUsers(quantity, page),
   });
 
   const mergedUsers = useMemo(() => {
@@ -74,19 +71,10 @@ export default function HomePage() {
       <UserTable
         isLoading={isLoading}
         users={filteredUsers}
-        onSelectUser={setSelectedUser}
+        onSelectUser={(user) => router.push(`/user/${user.login.uuid}`)}
         isFavorite={isFavorite}
         toggleFavorite={toggleFavorite}
       />
-
-      {selectedUser && (
-        <UserDetailsModal
-          user={selectedUser}
-          isFavorite={isFavorite}
-          toggleFavorite={toggleFavorite}
-          onClose={() => setSelectedUser(null)}
-        />
-      )}
     </main>
   );
 }

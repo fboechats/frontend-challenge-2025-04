@@ -39,8 +39,8 @@ export function useFavorites() {
             } else {
                 updated.add(id);
                 setFavoriteUsers(prevUsers => ({
-                    [id]: user,
                     ...prevUsers,
+                    [id]: user,
                 }));
             }
             return updated;
