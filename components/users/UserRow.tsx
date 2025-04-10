@@ -2,6 +2,18 @@ import { TableCell, TableRow } from "@/components/ui/Table";
 import { User } from "@/types/user";
 import { Star, StarOff } from "lucide-react";
 
+export function SkeletonRow() {
+    return (
+        <TableRow className="h-20">
+            {Array.from({ length: 6 }).map((_, i) => (
+                <TableCell key={i}>
+                    <div className="h-4 w-full max-w-[120px] bg-muted animate-pulse rounded" />
+                </TableCell>
+            ))}
+        </TableRow>
+    );
+}
+
 type Props = {
     isFavorite: (uuid: string) => boolean;
     onToggleFavorite: (user: User) => void;

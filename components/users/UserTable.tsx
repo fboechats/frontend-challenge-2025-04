@@ -6,9 +6,10 @@ import {
     TableRow,
 } from "@/components/ui/Table";
 import { User } from "@/types/user";
-import UserRow from "./UserRow";
+import UserRow, { SkeletonRow } from "./UserRow";
 
 type UserTableProps = {
+    isLoading: boolean;
     users: User[];
     onSelectUser: (user: User) => void;
     isFavorite: (uuid: string) => boolean;
@@ -16,6 +17,7 @@ type UserTableProps = {
 }
 
 export default function UserTable({
+    isLoading,
     users,
     onSelectUser,
     isFavorite,
@@ -34,17 +36,27 @@ export default function UserTable({
                     <TableHead>Actions</TableHead>
                 </TableRow>
             </TableHeader>
-            <TableBody>
-                {users.map((user) => (
-                    <UserRow
-                        key={user.login.uuid}
-                        user={user}
-                        isFavorite={isFavorite}
-                        onToggleFavorite={toggleFavorite}
-                        onSelectUser={onSelectUser}
-                    />
-                ))}
-            </TableBody>
+            {!isLoading && users.length === 0 ? (
+                <tr>
+                    <td colSpan={6} className="text-center text-muted-foreground py-6">
+                        No users found.
+                    </td>
+                </tr>
+            ) : (
+                <TableBody>
+                    {isLoading
+                        ? [...Array(10)].map((_, i) => <SkeletonRow key={i} />)
+                        : users.map((user) => (
+                            <UserRow
+                                key={user.login.uuid}
+                                user={user}
+                                isFavorite={isFavorite}
+                                onToggleFavorite={toggleFavorite}
+                                onSelectUser={onSelectUser}
+                            />
+                        ))}
+                </TableBody>
+            )}
         </Table>
     );
 }

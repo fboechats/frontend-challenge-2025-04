@@ -15,7 +15,7 @@ async function fetchUsers(quantity: number) {
 
 export default function HomePage() {
   const [query, setQuery] = useState("");
-  const [quantity, setQuantity] = useState(20);
+  const [quantity, setQuantity] = useState(10);
   const [showOnlyFavorites, setShowOnlyFavorites] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
@@ -56,7 +56,6 @@ export default function HomePage() {
       });
   }, [mergedUsers, query, showOnlyFavorites, isFavorite]);
 
-  if (isLoading) return <div className="p-4">Loading users...</div>;
   if (error) return <div className="p-4 text-red-500">Error loading users.</div>;
 
   return (
@@ -73,6 +72,7 @@ export default function HomePage() {
       </div>
 
       <UserTable
+        isLoading={isLoading}
         users={filteredUsers}
         onSelectUser={setSelectedUser}
         isFavorite={isFavorite}
