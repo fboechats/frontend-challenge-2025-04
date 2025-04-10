@@ -3,20 +3,24 @@ import {
     TableBody,
     TableHead,
     TableHeader,
-    TableRow
+    TableRow,
 } from "@/components/ui/Table";
-import { useFavorites } from "@/hooks/useFavorites";
 import { User } from "@/types/user";
 import UserRow from "./UserRow";
 
+type UserTableProps = {
+    users: User[];
+    onSelectUser: (user: User) => void;
+    isFavorite: (uuid: string) => boolean;
+    toggleFavorite: (user: User) => void;
+}
+
 export default function UserTable({
     users,
-    onSelectUser
-}: {
-    users: User[],
-    onSelectUser: (user: User) => void
-}) {
-    const { isFavorite, toggleFavorite } = useFavorites();
+    onSelectUser,
+    isFavorite,
+    toggleFavorite,
+}: UserTableProps) {
 
     return (
         <Table>
@@ -35,7 +39,7 @@ export default function UserTable({
                     <UserRow
                         key={user.login.uuid}
                         user={user}
-                        isFavorite={isFavorite(user.login.uuid)}
+                        isFavorite={isFavorite}
                         onToggleFavorite={toggleFavorite}
                         onSelectUser={onSelectUser}
                     />

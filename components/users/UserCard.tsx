@@ -10,25 +10,26 @@ import {
 
 type Props = {
     user: User;
-    isFavorite: boolean;
-    onToggleFavorite: (id: string) => void;
+    isFavorite: (uuid: string) => boolean;
+    toggleFavorite: (user: User) => void;
 };
 
-export default function UserCard({ user, isFavorite, onToggleFavorite }: Props) {
+export default function UserCard({ user, isFavorite, toggleFavorite }: Props) {
     const fullName = `${user.name.first} ${user.name.last}`;
     const location = `${user.location.city}, ${user.location.state}, ${user.location.country}`;
     const birthDate = new Date(user.dob.date);
     const birthFormatted = birthDate.toLocaleDateString("en-GB");
     const age = user.dob.age;
+    const isFavoriteUser = isFavorite(user.login.uuid);
 
     return (
         <div className="relative bg-white p-6">
             <button
-                onClick={() => onToggleFavorite(user.login.uuid)}
+                onClick={() => toggleFavorite(user)}
                 className="absolute top-4 right-4 text-gray-400 hover:text-yellow-500 transition cursor-pointer"
                 aria-label="Toggle Favorite"
             >
-                {isFavorite ? <Star fill="currentColor" /> : <StarOff />}
+                {isFavoriteUser ? <Star fill="currentColor" /> : <StarOff />}
             </button>
 
             <div className="flex items-center gap-5">

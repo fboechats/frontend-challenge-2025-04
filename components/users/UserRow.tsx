@@ -3,13 +3,15 @@ import { User } from "@/types/user";
 import { Star, StarOff } from "lucide-react";
 
 type Props = {
-    isFavorite: boolean;
+    isFavorite: (uuid: string) => boolean;
     onToggleFavorite: (user: User) => void;
     onSelectUser: (user: User) => void
     user: User
 };
 
 export default function UserRow({ user, isFavorite, onToggleFavorite, onSelectUser }: Props) {
+    const isFavoriteUser = isFavorite(user.login.uuid);
+
     return (
         <TableRow
             onClick={() => onSelectUser(user)}
@@ -37,9 +39,9 @@ export default function UserRow({ user, isFavorite, onToggleFavorite, onSelectUs
                         onToggleFavorite(user)
                     }}
                     className="text-yellow-500 hover:text-yellow-600 transition cursor-pointer"
-                    title={isFavorite ? "Remove from favorites" : "Add to favorites"}
+                    title={isFavoriteUser ? "Remove from favorites" : "Add to favorites"}
                 >
-                    {isFavorite ? <Star fill="currentColor" /> : <StarOff />}
+                    {isFavoriteUser ? <Star fill="currentColor" /> : <StarOff />}
                 </button>
             </TableCell>
         </TableRow>

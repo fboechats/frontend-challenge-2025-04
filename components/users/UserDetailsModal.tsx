@@ -6,15 +6,15 @@ import UserCard from "./UserCard";
 
 type Props = {
     user: User;
-    isFavorite: boolean;
-    onToggleFavorite: (id: string) => void;
+    isFavorite: (uuid: string) => boolean;
+    toggleFavorite: (user: User) => void;
     onClose: () => void;
 };
 
 export default function UserDetailsModal({
     user,
     isFavorite,
-    onToggleFavorite,
+    toggleFavorite,
     onClose,
 }: Props) {
 
@@ -53,7 +53,7 @@ export default function UserDetailsModal({
                         <UserCard
                             user={user}
                             isFavorite={isFavorite}
-                            onToggleFavorite={onToggleFavorite}
+                            toggleFavorite={toggleFavorite}
                         />
                     </div>
                 </motion.div>
