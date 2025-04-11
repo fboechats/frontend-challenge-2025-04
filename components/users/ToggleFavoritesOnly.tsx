@@ -10,6 +10,7 @@ export default function ToggleFavoritesOnly({
     return (
         <label className="inline-flex items-center gap-2 text-sm cursor-pointer">
             <input
+                aria-label="Toggle Favorites"
                 type="checkbox"
                 checked={showOnlyFavorites}
                 onChange={(e) => setShowOnlyFavorites(e.target.checked)}

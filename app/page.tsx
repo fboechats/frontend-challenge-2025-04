@@ -1,6 +1,6 @@
 "use client";
 
-import { SearchBar, ToggleFavoritesOnly, UserQuantitySelector } from "@/components/users";
+import { PaginationControls, SearchBar, ToggleFavoritesOnly, UserQuantitySelector } from "@/components/users";
 import UserTable from "@/components/users/UserTable";
 import { useFavorites } from "@/hooks/useFavorites";
 import { fetchUsers } from "@/lib/fetch-users";
@@ -74,6 +74,11 @@ export default function HomePage() {
         onSelectUser={(user) => router.push(`/user/${user.login.uuid}`)}
         isFavorite={isFavorite}
         toggleFavorite={toggleFavorite}
+      />
+      <PaginationControls
+        page={page}
+        setPage={setPage}
+        disabled={filteredUsers.length < quantity}
       />
     </main>
   );
