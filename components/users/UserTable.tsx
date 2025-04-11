@@ -13,7 +13,7 @@ type UserTableProps = {
     users: User[];
     onSelectUser: (user: User) => void;
     isFavorite: (uuid: string) => boolean;
-    toggleFavorite: (user: User) => void;
+    toggleFavorite: (uuid: string) => void;
 }
 
 export default function UserTable({

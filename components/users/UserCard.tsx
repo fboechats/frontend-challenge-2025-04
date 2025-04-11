@@ -11,7 +11,7 @@ import {
 type Props = {
     user: User;
     isFavorite: (uuid: string) => boolean;
-    toggleFavorite: (user: User) => void;
+    toggleFavorite: (uuid: string) => void;
 };
 
 export default function UserCard({ user, isFavorite, toggleFavorite }: Props) {
@@ -25,7 +25,7 @@ export default function UserCard({ user, isFavorite, toggleFavorite }: Props) {
     return (
         <div className="relative bg-white p-6">
             <button
-                onClick={() => toggleFavorite(user)}
+                onClick={() => toggleFavorite(user.login.uuid)}
                 className="absolute top-4 right-4 text-gray-400 hover:text-yellow-500 transition cursor-pointer"
                 aria-label="Toggle Favorite"
             >

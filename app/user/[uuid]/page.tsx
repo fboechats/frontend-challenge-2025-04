@@ -14,12 +14,13 @@ interface UserPageProps {
 
 export default function UserPage({ params }: UserPageProps) {
     const { uuid } = use(params);
-    const { isFavorite, toggleFavorite } = useFavorites();
 
-    const { data: users, isLoading, error } = useQuery({
-        queryKey: ["users", 1, 1],
-        queryFn: () => fetchUsers(1, 1),
+    const { data: users = [], isLoading, error } = useQuery({
+        queryKey: ["users", 100, 1],
+        queryFn: () => fetchUsers(100, 1),
     });
+
+    const { isFavorite, toggleFavorite } = useFavorites(users);
 
     if (isLoading) return <div className="p-6 text-center">Loading user...</div>;
     if (error) return <div className="p-6 text-red-500 text-center">Error loading user.</div>;

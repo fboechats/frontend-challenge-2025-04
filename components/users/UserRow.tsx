@@ -16,7 +16,7 @@ export function SkeletonRow() {
 
 type Props = {
     isFavorite: (uuid: string) => boolean;
-    onToggleFavorite: (user: User) => void;
+    onToggleFavorite: (uuid: string) => void;
     onSelectUser: (user: User) => void
     user: User
 };
@@ -48,7 +48,7 @@ export default function UserRow({ user, isFavorite, onToggleFavorite, onSelectUs
                 <button
                     onClick={(event) => {
                         event.stopPropagation();
-                        onToggleFavorite(user)
+                        onToggleFavorite(user.login.uuid)
                     }}
                     className="text-yellow-500 hover:text-yellow-600 transition cursor-pointer"
                     title={isFavoriteUser ? "Remove from favorites" : "Add to favorites"}

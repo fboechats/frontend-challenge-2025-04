@@ -17,12 +17,6 @@ export default function HomePage() {
   const router = useRouter();
 
   const {
-    isFavorite,
-    toggleFavorite,
-    favoriteUsers,
-  } = useFavorites();
-
-  const {
     data: users = [],
     isLoading,
     error,
@@ -30,6 +24,12 @@ export default function HomePage() {
     queryKey: ["users", quantity, page],
     queryFn: () => fetchUsers(quantity, page),
   });
+
+  const {
+    isFavorite,
+    toggleFavorite,
+    favoriteUsers,
+  } = useFavorites(users);
 
   const mergedUsers = useMemo(() => {
     const userMap = new Map<string, User>();
